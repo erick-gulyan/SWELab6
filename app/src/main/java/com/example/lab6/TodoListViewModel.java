@@ -2,6 +2,7 @@ package com.example.lab6;
 
 import android.app.Application;
 import android.content.Context;
+import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -31,6 +32,32 @@ public class TodoListViewModel  extends AndroidViewModel {
     private void loadUsers(){
         todoListItems = todoListItemDao.getAllLive();
     }
+
+    public void toggleCompleted(TodoListItem todoListItem){
+        todoListItem.completed = !todoListItem.completed;
+        todoListItemDao.update(todoListItem);
+    }
+
+    public void updateText(TodoListItem todoListItem, String newText){
+        todoListItem.text = newText;
+        todoListItemDao.update(todoListItem);
+    }
+
+    public void createTodo(String text){
+        int endOfListOrder = todoListItemDao.gerOrderForAppend();
+        TodoListItem newItem = new TodoListItem(text, false, endOfListOrder);
+        todoListItemDao.insert(newItem);
+    }
+
+    public void  deleteTodo(TodoListItem todoListItem){
+        todoListItemDao.delete(todoListItem);
+
+    }
+
+
+
+
+
 
 
 }

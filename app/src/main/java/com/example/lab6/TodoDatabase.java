@@ -32,7 +32,7 @@ public abstract class TodoDatabase extends RoomDatabase {
                         super.onCreate(db);
                         Executors.newSingleThreadExecutor().execute(()->{
                             List<TodoListItem> todos = TodoListItem
-                                    .loadJSON(context, "demo_todos.json");
+                                    .loadJSON(context, "demos_todos.json");
                             getSingleton(context).todoListItemDao().insertAll(todos);
                         });
                     }
@@ -47,4 +47,6 @@ public abstract class TodoDatabase extends RoomDatabase {
         }
         singleton = testDatabase;
     }
+
+
 }
