@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Lab 6</string>
+    <string name="enter_a_todo_here">Enter a todo here...</string>
+    <string name="add">Add</string>
+</resources>
