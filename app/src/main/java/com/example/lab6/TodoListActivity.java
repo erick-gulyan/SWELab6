@@ -35,6 +35,7 @@ public class TodoListActivity extends AppCompatActivity {
         adapter.setHasStableIds(true);
         adapter.setOnCheckBoxClickedHandler(viewModel::toggleCompleted);
         adapter.setOnTextEditedHandler(viewModel::updateText);
+        adapter.setOnDeleteClicked(viewModel::deleteTodo);
         viewModel.getTodoListItems().observe(this, adapter::setTodoListItems);
 
 
@@ -46,7 +47,6 @@ public class TodoListActivity extends AppCompatActivity {
         this.deleteButton = this.findViewById(R.id.delete_btn);
 
         addTodoButton.setOnClickListener(this::onAddTodoClicked);
-        deleteButton.setOnClickListener(this::onDeleteTodoClicked);
 
     }
 
@@ -56,9 +56,7 @@ public class TodoListActivity extends AppCompatActivity {
         viewModel.createTodo(text);
     }
 
-    void onDeleteTodoClicked(View view){
 
-    }
 
 
 
