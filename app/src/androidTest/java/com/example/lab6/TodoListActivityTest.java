@@ -46,7 +46,7 @@ public class TodoListActivityTest {
                 .build();
         TodoDatabase.injectTestDatabase(testDb);
 
-        List<TodoListItem> todos = TodoListItem.loadJSON(context, "demo_todos.json");
+        List<TodoListItem> todos = TodoListItem.loadJSON(context, "demos_todos.json");
         todoListItemDao = testDb.todoListItemDao();
         todoListItemDao.insertAll(todos);
     }
@@ -87,7 +87,7 @@ public class TodoListActivityTest {
         scenario.moveToState(Lifecycle.State.RESUMED);
 
         scenario.onActivity(activity -> {
-           List<TodoListItem> beforeTodoList = todoListItemDao.getAll();
+           List<TodoListItem> beforeTodoList = (List<TodoListItem>) todoListItemDao.getAll();
 
            EditText newTodoText = activity.findViewById(R.id.new_todo_text);
            Button addTodoButton = activity.findViewById(R.id.add_todo_btn);
@@ -95,7 +95,7 @@ public class TodoListActivityTest {
            newTodoText.setText(newText);
            addTodoButton.performClick();
 
-           List<TodoListItem> afterTodoList = todoListItemDao.getAll();
+           List<TodoListItem> afterTodoList = (List<TodoListItem>) todoListItemDao.getAll();
            assertEquals(beforeTodoList.size()+1, afterTodoList.size());
            assertEquals(newText, afterTodoList.get(afterTodoList.size()-1).text);
         });
@@ -110,7 +110,7 @@ public class TodoListActivityTest {
         scenario.moveToState(Lifecycle.State.RESUMED);
 
         scenario.onActivity(activity -> {
-           List<TodoListItem> beforeTodoList = todoListItemDao.getAll();
+           List<TodoListItem> beforeTodoList = (List<TodoListItem>) todoListItemDao.getAll();
 
            RecyclerView recyclerView = activity.recyclerView;
            RecyclerView.ViewHolder firstVH = recyclerView.findViewHolderForAdapterPosition(0);
@@ -121,7 +121,7 @@ public class TodoListActivityTest {
            View deleteButton = firstVH.itemView.findViewById(R.id.delete_btn);
            deleteButton.performClick();
 
-           List<TodoListItem> afterTodoList = todoListItemDao.getAll();
+           List<TodoListItem> afterTodoList = (List<TodoListItem>) todoListItemDao.getAll();
 
            assertEquals(beforeTodoList.size()-1, afterTodoList.size());
            TodoListItem editedItem = todoListItemDao.get(id);
@@ -140,7 +140,7 @@ public class TodoListActivityTest {
         scenario.moveToState(Lifecycle.State.RESUMED);
 
         scenario.onActivity(activity -> {
-            List<TodoListItem> beforeTodoList = todoListItemDao.getAll();
+            List<TodoListItem> beforeTodoList =  todoListItemDao.getAll();
 
             RecyclerView recyclerView = activity.recyclerView;
             RecyclerView.ViewHolder firstVH = recyclerView.findViewHolderForAdapterPosition(0);
@@ -149,7 +149,7 @@ public class TodoListActivityTest {
             long id = firstVH.getItemId();
             TodoListItem beforeItem = todoListItemDao.get(id);
 
-            View checkButton = firstVH.itemView.findViewById(R.id.delete_btn);
+            View checkButton = firstVH.itemView.findViewById(R.id.completed);
             checkButton.performClick();
 
            TodoListItem afterItem = todoListItemDao.get(id);
